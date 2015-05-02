@@ -1,35 +1,35 @@
 #!usr/bin/env python
 # -*-coding:utf-8 -*-
 
-import mysql.connector
+import MySQLdb
+import r_n
 
-def store_mysql(filepath):
-    conn = mysql.connector.connect(user = 'root', password = '1207', database = 'ShowMeTheCode')
-    cursor = conn.cursor()
-
-    # 判断表是否已经存在
-    cursor.execute('show tables in ShowMeTheCode;')
-    tables = cursor.fetchall()
-    findtables = False
-    for table in tables:
-        if 'code' in table:
-            findtables = True
-    if not findtables:
-        cursor.execute('''
-                CREATE TABLE `ShowMeTheCode`.`code` (
-                `id` INT NOT NULL AUTO_INCREMENT,
-                `code` VARCHAR(10) NOT NULL,
-                PRIMARY KEY (`id`));
-        ''')
-
-    f = open(filepath, 'rb')
-    for line in f.readlines():
-        code = line.strip()
-        cursor.execute("insert into ShowMeTheCode.code (code) values(%s);", [code])
-
+def connt_db(val):
+    conn = MySQLdb.connect(host='localhost',user='root',passwd='password')
+    curs = conn.cursor()
+    conn.select_db('mid')
+    #不为NULL
+    if val == '':
+        return
+    valu = []
+    valu.append(val)
+    print valu
+    #the valu must be a list
+    curs.execute("insert into ser values(%s)",valu)
     conn.commit()
-    cursor.close()
     conn.close()
+    curs.close()
+
+def write_code():
+    with open('result.txt') as fp:
+        for line in fp:
+            #用来删除换行符
+            line = line.strip('\r\n')
+            connt_db(line)
+
 
 if __name__ == '__main__':
-    store_mysql('Activation_code.txt')
+	#connt_db()
+    write_code()
+
+#reference site http://my.oschina.net/davehe/blog/128361

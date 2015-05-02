@@ -9,13 +9,10 @@ import string
 strings=''
 
 '''
-
 for i in range(0,10):
 	string+=str(int(i))
-
 for i in range(97,123):
 	string+=chr(int(i))
-
 '''
 #generate 'abcdef.....XYZ'
 strings=string.letters
@@ -50,5 +47,4 @@ def file_write():
 if __name__ == '__main__':
 	for n in range(0,10):
 		file_write()
-
 
