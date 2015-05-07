@@ -10,6 +10,7 @@ from PIL import Image
 import glob
 
 def get_list():
+	#return list
 	return glob.glob(r'./*.jpg')
 
 def image_process(image_name):
